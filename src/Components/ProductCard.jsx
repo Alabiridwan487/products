@@ -1,30 +1,8 @@
-// import React from 'react'
-// import { Link } from 'react-router-dom';
-
-// const ProductCard = ({ product }) => {
-//   console.log(product);
-//   return (
-//     <>
-//       <div className='border rounded-lg'>
-//       Image: <img src={product.image} alt="" />
-//       Category: {product.category}
-//       Price: {product.price}
-//       <Link to={`${product.id}`}>
-//         <button> View More Detail...</button>
-//       </Link>
-//       </div>
-//     </>
-//   )
-// }
-
-// export default ProductCard
 
 import React from 'react';
 import { Link } from 'react-router-dom';
 
 const ProductCard = ({ product }) => {
-  console.log(product);
-
   return (
     <>
     <div className="bg-white shadow-lg rounded-2xl p-4 w-full sm:w-64 md:w-72 lg:w-80 transition-transform transform hover:scale-105 hover:shadow-xl">

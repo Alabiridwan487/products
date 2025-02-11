@@ -7,6 +7,7 @@ const SideBar = () => {
     <div>
       <aside className='bg-slate-800 text-white h-screen w-80 p-5 shadow-lg mt-5 rounded-r-lg'>
       <h1 className='text-xl font-bold mb-6 shadow-xl text-amber-300'>Dashboard</h1>
+
       <nav>
         <ul className='space-y-4'>
           <Link to={'/'} className='flex items-center gap-3 p-2 hover:bg-slate-900 rounded cursor-pointer'>

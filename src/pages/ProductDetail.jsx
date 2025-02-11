@@ -1,50 +1,20 @@
-// import React, { useEffect, useState } from 'react';
-// import { useParams } from "react-router-dom"
-
-// const ProductDetail = () => {
-//   const { id } = useParams();
-//   const [product, setProduct] = useState(null);
-
-//   console.log(id);
-
-
-//   useEffect(() => {
-//     const fetchSingleProduct = async () => {
-//       try {
-//         const data = await fetch(`https://fakestoreapi.com/product/${id}`);
-//         const response = await data.json();
-//         console.log(response)
-//         setProduct(response)
-//       } catch (error) {
-//         console.log(error.message)
-//       }
-
-//     }
-//     fetchSingleProduct();
-//   }, [])
-//   return (
-//     <div>
-//       <>
-//         Description: {product.description}
-//         price: {product.price}
-//       </>
-//     </div>
-//   )
-// }
-
-// export default ProductDetail
 
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { FlutterWaveButton, closePaymentModal } from "flutterwave-react-v3";
+import { addToCart } from '../redux/slices/CartSlices';
+import { useDispatch } from 'react-redux';
+
+
 
 const ProductDetail = () => {
   const { id } = useParams();
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  
-  
+
+  const dispatch = useDispatch();
+
 
   useEffect(() => {
     const fetchSingleProduct = async () => {
@@ -68,8 +38,9 @@ const ProductDetail = () => {
   if (loading) return <p>Loading product details...</p>;
   if (error) return <p>Error: {error}</p>;
   if (!product) return <p>Product not found</p>;
-  const FLUTTER_PUBLIC_KEY = import.meta.env.VITE_PUBLIC_KEY
 
+
+  const FLUTTER_PUBLIC_KEY = import.meta.env.VITE_PUBLIC_KEY
   const config = {
     public_key: FLUTTER_PUBLIC_KEY,
     tx_ref: Date.now(),
@@ -108,9 +79,12 @@ const ProductDetail = () => {
         <p className="text-gray-700 mb-4"><strong>Description:</strong> {product.description}</p>
         <p className="text-lg font-semibold text-green-600"><strong>Price:</strong> ${product.price}</p>
         <FlutterWaveButton {...fwConfig} className="px-5 py-2 mt-9 h-12 bg-blue-600 text-white rounded-lg shadow-sm hover:bg-blue-700 w-52 transition duration-300" />
-        {/* <button>Order Now</button> */}
-      </div>
 
+        <div>
+          <button onClick={() => { dispatch(addToCart(product)) }} className="mt-6 border text-gray-800 py-3 px-4 h-12 rounded-xl hover:border-blue-800 transition duration-300 relative bottom-18 left-60">Add to Cart</button>
+        </div>
+
+      </div>
     </div>
   );
 };

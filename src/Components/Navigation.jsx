@@ -1,8 +1,6 @@
 import React from 'react'
 import { useNavigate, useLocation } from 'react-router-dom';
 
-
-
 const Navigation = () => {
 
   const navigate = useNavigate();
@@ -11,7 +9,6 @@ const Navigation = () => {
   if (location.pathname === "/") {
     return null;
   }
-    
     
   return (
     <>
