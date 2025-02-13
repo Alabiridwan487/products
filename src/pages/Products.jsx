@@ -5,7 +5,20 @@ import { useNavigate } from 'react-router-dom';
 
 const Products = () => {
   const [product, setProduct] = useState([]);
+  const [filterProduct, setFilterProduct] = useState([]);
+
+
   const navigate = useNavigate();
+
+  const filteredProduct = (price) => {
+    if (!price) {
+      setProduct(filterProduct);
+    }
+    else {
+      const result = filterProduct.filter((p) => p.price > price);
+      setProduct(result);
+    }
+  }
 
 
   useEffect(() => {
@@ -14,6 +27,7 @@ const Products = () => {
         const data = await fetch("https://fakestoreapi.com/products?limit=9");
         const response = await data.json();
         setProduct(response)
+        setFilterProduct(response)
       } catch (error) {
         console.log(error.message)
 
@@ -24,8 +38,21 @@ const Products = () => {
   }, [])
 
   return (
-    <div className='mt-12  '>
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mt-8">
+    <div className='container mx-auto p-6'>
+
+      <select
+        onChange={(e) => {
+          filteredProduct(Number(e.target.value));
+        }}
+
+        className='relative left-[1000px] bottom-26' name='' id=''>
+        <option value="">---All---</option>
+        <option value="50">50</option>
+        <option value="100">100</option>
+        <option value="200">200</option>
+      </select>
+
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols- gap-6">
 
         {
           product.map((p, index) => {
@@ -41,5 +68,7 @@ const Products = () => {
 }
 
 export default Products
+
+
 
 

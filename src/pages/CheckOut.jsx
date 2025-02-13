@@ -1,14 +1,17 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";  // Import useDispatch
 import { Link } from "react-router-dom";
 import { FlutterWaveButton, closePaymentModal } from "flutterwave-react-v3";
+import { removeFromCart } from "../redux/slices/CartSlices"; // Import removeFromCart action
 
 const CheckOut = () => {
+    const dispatch = useDispatch(); // Initialize dispatch
     const cartItems = useSelector((state) => state.cart.cartItem);
 
     const totalPrice = cartItems.reduce((acc, item) => acc + (item.price * (item.quantity || 1)), 0);
 
-    const FLUTTER_PUBLIC_KEY = import.meta.env.VITE_PUBLIC_KEY
+    const FLUTTER_PUBLIC_KEY = import.meta.env.VITE_PUBLIC_KEY;
+
     const config = {
         public_key: FLUTTER_PUBLIC_KEY,
         tx_ref: Date.now(),
@@ -32,9 +35,14 @@ const CheckOut = () => {
         text: 'Order Now',
         callback: (response) => {
             console.log(response);
-            closePaymentModal()
+            closePaymentModal();
         },
         onClose: () => { },
+    };
+
+    // Correct the handleRemove function to use dispatch
+    const handleRemove = (id) => {
+        dispatch(removeFromCart(id));  // Dispatch the action to remove the item
     };
 
     return (
@@ -56,7 +64,16 @@ const CheckOut = () => {
                                         <p className="text-sm text-gray-500">Quantity: {item.quantity || 1}</p>
                                     </div>
                                 </div>
-                                <p className="font-semibold text-lg">${(item.price * (item.quantity || 1)).toFixed(2)}</p>
+                                <div className="flex items-center space-x-4">
+                                    <p className="font-semibold text-lg">${(item.price * (item.quantity || 1)).toFixed(2)}</p>
+
+                                    <button
+                                        onClick={() => handleRemove(item.id)} // Trigger handleRemove on click
+                                        className="bg-red-500 text-white px-3 py-1 rounded-md hover:bg-red-600"
+                                    >
+                                        Remove
+                                    </button>
+                                </div>
                             </li>
                         ))}
                     </ul>
@@ -67,10 +84,6 @@ const CheckOut = () => {
                             <span>${totalPrice.toFixed(2)}</span>
                         </h3>
                     </div>
-
-                    {/* <button className="w-full bg-blue-500 text-white py-3 mt-6 rounded-md text-lg font-semibold hover:bg-blue-600">
-            Proceed to Payment
-          </button> */}
 
                     <FlutterWaveButton
                         className="w-40 bg-blue-500 text-white py-3 rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
@@ -87,3 +100,5 @@ const CheckOut = () => {
 };
 
 export default CheckOut;
+
+

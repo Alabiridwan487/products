@@ -1,12 +1,12 @@
 import React from "react";
 import { useSelector } from "react-redux";
-import { clearCart } from "../redux/slices/CartSlices";
 import { Link } from "react-router-dom";
 
 
 const CartDrop = () => {
   const cartItems = useSelector((state) => state.cart.cartItem);
-  console.log(cartItems)
+
+  console.log("Cart Items" ,cartItems)
 
   return (
     <div className="absolute right-0 mt-2 w-64 bg-white border shadow-lg rounded-lg p-4 text-black">
@@ -25,7 +25,7 @@ const CartDrop = () => {
             </>
 
           ))}
-          <Link to={"/checkout"} className="block mt-4 bg-red-600 text-white py-2 text-center rounded-md">CHECKOUT...</Link >
+          <Link to={"/checkout"} className="block mt-4 bg-blue-600 text-white py-2 text-center rounded-md">CHECK OUT..</Link >
         </ul>
         </div>
       )}
