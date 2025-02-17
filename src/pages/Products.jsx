@@ -3,9 +3,11 @@ import ProductCard from '../components/ProductCard';
 import { useNavigate } from 'react-router-dom';
 
 
+
 const Products = () => {
   const [product, setProduct] = useState([]);
   const [filterProduct, setFilterProduct] = useState([]);
+  const [searchQuery, setSearchQuery] = useState('')
 
 
   const navigate = useNavigate();
@@ -36,9 +38,18 @@ const Products = () => {
     }
     fetchProduct();
   }, [])
+  const searchedProducts = product.filter((p) => p.title.toLowerCase().includes(searchQuery.toLowerCase()) );
 
   return (
     <div className='container mx-auto p-6'>
+      <div>
+        <input type="text"
+          placeholder='Search products...'
+          className='relative left-[500px] bottom-26 px-4  border py-2 rounded-md'
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+        />
+      </div>
 
       <select
         onChange={(e) => {
@@ -55,7 +66,7 @@ const Products = () => {
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols- gap-6">
 
         {
-          product.map((p, index) => {
+          searchedProducts.map((p, index) => {
             console.log(p);
             return (
               <ProductCard key={index} product={p} />
