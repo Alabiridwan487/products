@@ -10,7 +10,7 @@ const SideBar = () => {
 
       <nav>
         <ul className='space-y-4'>
-          <Link to={'/'} className='flex items-center gap-3 p-2 hover:bg-slate-900 rounded cursor-pointer'>
+          <Link to={'/dashboard'} className='flex items-center gap-3 p-2 hover:bg-slate-900 rounded cursor-pointer'>
             <Home size={20} />
             <span>Home</span>
           </Link>

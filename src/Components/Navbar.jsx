@@ -3,9 +3,6 @@ import { Link } from 'react-router-dom'
 import { FaShoppingCart } from "react-icons/fa";
 import { useSelector } from 'react-redux';
 import CartDrop from './CartDrop';
-import { BsQuestionOctagon } from "react-icons/bs";
-import { RiArrowDropDownLine } from "react-icons/ri";
-
 
 const Navbar = () => {
 
@@ -20,24 +17,26 @@ const Navbar = () => {
         <img src="./kiitechwhite-removebg-preview.png" alt="" />
       </Link>
 
-      <div className=' flex gap-20'>
-        <div className='flex gap-3'>
-          <FaShoppingCart onClick={() =>
-            setShowCartItem((previous) => !previous)} className='h-6 w-6' />
-          {cart}
-        </div>
-        {showCartItem && <CartDrop />}
+      <div className="flex justify-center items-center h-screen">
+        <div className="flex gap-10 items-center">
+          <div className="flex items-center gap-3 cursor-pointer" onClick={() => setShowCartItem((prev) => !prev)}>
+            <FaShoppingCart className="h-6 w-6 text-gray-100" />
+            {cart && <span className="text-red-500">{cart}</span>}
+          </div>
+          {showCartItem && <CartDrop />}
 
 
-        <div className='flex gap-15'>
-          <div className='flex gap-2'>
-            <BsQuestionOctagon className='text-2xl' />
-            <h4>Help</h4>
-            <RiArrowDropDownLine />
+          <Link to={"/login"}>
+            <h3 className="text-xl text-gray-200">Login</h3>
+          </Link>
+
+
+          <div className="bg-green-600 px-2 w-20 h-10 text-center flex rounded hover:bg-green-700">
+            <Link to={"/sign-up"} className='relative top-2 left-0.5'>Sign Up</Link>
           </div>
         </div>
-
       </div>
+
     </div>
 
   )

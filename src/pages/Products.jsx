@@ -67,7 +67,6 @@ const Products = () => {
 
         {
           searchedProducts.map((p, index) => {
-            console.log(p);
             return (
               <ProductCard key={index} product={p} />
             )
@@ -79,6 +78,7 @@ const Products = () => {
 }
 
 export default Products
+
 
 
 
